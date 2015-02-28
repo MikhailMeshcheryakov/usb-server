@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+
+from subprocess import call, popen
+
+addr = sys.argv[1]
+mPoint = sys.argv[2]
+
+def killHandler():
+	call(['kill', pid])
+
+signal.signal(signal.SIGTERM, killHandler)
+
+try:
+	call(['mkdir', mPoint])
+	call(['ln', '-s', '~/Desktop/'+mPoint.split('/')[-1], 'pi@'+addr+])
+	proc = popen(['sshfs', '-f', 'pi@'+addr+':'+mPoint, mPoint])
+	pid = proc.pid
+	proc.wait()
+finally:
+	call(['rm', mPoint, '~/desktop/'+mPoint.split('/')[-1])
+	call(['rmdir', mPoint])
