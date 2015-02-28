@@ -31,11 +31,11 @@ That pack includes 6 files:
 "login" - Declare login info (setup script)
 "logout" - Declare logout info (cleanup script)
 "initdb" - create initial data base
-"usb-server" - server part of USBinteraction Python3 script
 "usb-connector" - responsible for final part of interaction: create and remove simlinks
-"un-mount" - program to mount or unmount devices from client machine. Work automatically, starts from TCP request
------
+"mount" - program to mount or unmount devices from client machine. Work automatically, starts from TCP request
+
 NOTA BENE!
+-----
 first of all you need to install netifaces python module from using this commands:
 ```
 	$tar xvzf netifaces-0.10.4.tar.gz
