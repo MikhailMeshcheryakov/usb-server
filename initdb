@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import sqlite3
+
+DATABASE_FILENAME = '/var/init.db'
+
+conn = sqlite3.connect(DATABASE_FILENAME)
+c = conn.cursor()
+c.execute (''' create table users ( Display int , User text) ''')
+c.execute(''' create table mountPoints ( Display int , MountP text , PID int) ''')
+conn.commit()
+conn.close
