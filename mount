@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+r"""(Un)mount script for Effits Ltd. needs; 
+Script mount devices when TCP FLAG equals 1  
+
+Supports TCP over IPv4 only"""
+
+import socket, sqlite3, logging, subprocess
+
+DATABASE_FILENAME = '/var/init.db'
+LOG_FILENAME = '/var/log/system.log'
+
+HOST = ''
+PORT = 50007
+
+def main():
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	s.bind((HOST, PORT))
+	s.listen(1)
+	connSC, addr = s.accept()
+	data = connSC.recvfrom(1024)
+		if not data: 
+			continue
+		ipStr = socket.gethostbyname(socket.gethostname())
+		def getLastOctet(ipStr):
+			res = ipStr.split('.')[-1]
+			return res
+
+			try:
+				connDB = sqlite3.connect(DATABASE_FILENAME)
+				cur = conn.cursor()
+
+				connector = subprocess.popen('usb-connector')
+				PID = connector.pid
+
+				if FLAG == 1:
+					cur.execute('INSERT INTO MountPoints \
+						({0}, {1}, {2});'.format(getLastOctet, mPoint, PID))
+					subprocess.popen('usb-connector', mountP, addr)
+
+				else:
+					connector.send_signal(signal.SIGTERM)
+					cur.execute('DELETE FROM MountPoints \
+						 WHERE ({0}, {1}, {2});'.format(getLastOctet, mPoint, PID)
+			except Exception as err:
+				logging.critical(err)
+				raise err
+			finally:
+				if connDB:
+					connSC.sendall(b'ok')
+					connDB.close()
+
+	connSC.close()			
+if __name__ == '__main__':
+	main()
