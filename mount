@@ -19,36 +19,35 @@ def main():
 	s.listen(1)
 	connSC, addr = s.accept()
 	data = connSC.recvfrom(1024)
-		if not data: 
-			continue
-		ipStr = socket.gethostbyname(socket.gethostname())
-		def getLastOctet(ipStr):
-			res = ipStr.split('.')[-1]
-			return res
+	if not data: 
+		continue
+	ipStr = socket.gethostbyname(socket.gethostname())
+	def getLastOctet(ipStr):
+		res = ipStr.split('.')[-1]
+		return res
+	try:
+		connDB = sqlite3.connect(DATABASE_FILENAME)
+		cur = conn.cursor()
 
-			try:
-				connDB = sqlite3.connect(DATABASE_FILENAME)
-				cur = conn.cursor()
+		connector = subprocess.popen('usb-connector')
+		PID = connector.pid
 
-				connector = subprocess.popen('usb-connector')
-				PID = connector.pid
-
-				if FLAG == 1:
-					cur.execute('INSERT INTO MountPoints \
-						({0}, {1}, {2});'.format(getLastOctet, mPoint, PID))
-					subprocess.popen('usb-connector', mountP, addr)
-
-				else:
-					connector.send_signal(signal.SIGTERM)
-					cur.execute('DELETE FROM MountPoints \
+		if FLAG == 1:
+			cur.execute('INSERT INTO MountPoints \
+				({0}, {1}, {2});'.format(getLastOctet, mPoint, PID))
+			subprocess.popen('usb-connector', mountP, addr)
+	
+		else:
+			connector.send_signal(signal.SIGTERM)
+			cur.execute('DELETE FROM MountPoints \
 						 WHERE ({0}, {1}, {2});'.format(getLastOctet, mPoint, PID)
 			except Exception as err:
 				logging.critical(err)
 				raise err
-			finally:
-				if connDB:
-					connSC.sendall(b'ok')
-					connDB.close()
+		finally:
+			if connDB:
+				connSC.sendall(b'ok')
+				connDB.close()
 
 	connSC.close()			
 if __name__ == '__main__':
