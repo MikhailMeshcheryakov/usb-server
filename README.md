@@ -14,7 +14,7 @@ Use that commands to install this software remote:
 ```
     $ mkdir usb-server
     $ cd usb-server
-    $ git clone git@effits.ru:/var/git/usb-server.git
+    $ git clone https://github.com/MikhailMeshcheryakov/usb-server.git
     $ ./install
 ```
 or just use one command if you have this pack physically:
@@ -28,6 +28,7 @@ Description:
 That pack includes 6 files:
 
 "install" - for the installation setup & cleanup scripts into client system
+"changeconf" - change LightDM.conf
 "login" - Declare login info (setup script)
 "logout" - Declare logout info (cleanup script)
 "initdb" - create initial data base
