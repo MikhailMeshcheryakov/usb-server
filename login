@@ -9,8 +9,8 @@ DATABASE_FILENAME = '/var/init.db'
 logging.basicConfig(filename=LOG_FILENAME, filemode='a', level=logging.error)
 
 def main():
-	display = os.environ['DISP']
-	user = os.environ['USER']
+	display = os.getenv['DISP']
+	user = os.getenv['USER']
 
 	def isUserNameCorr(usr):
 		isUserNameContains = string.ascii_letters + string.digits + '_' + '-' + '.'
