@@ -34,7 +34,7 @@ def main():
 
 		if FLAG == 1:
 			cur.execute('INSERT INTO MountPoints \
-				({0}, {1}, {2});'.format(getLastOctet, mPoint, PID))
+				VALUES ({0}, {1}, {2});'.format(getLastOctet, mPoint, PID))
 			subprocess.popen('usb-connector', mountP, addr)
 	
 		else:
