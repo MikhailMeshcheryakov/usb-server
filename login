@@ -26,7 +26,7 @@ def main():
 		conn = sqlite3.connect(DATABASE_FILENAME)
 		cur  = conn.cursor()
 
-		cur.execute('INSERT INTO users ({0}, {1});'.format(display, user))
+		cur.execute('INSERT INTO users VALUES ({0}, {1});'.format(display, user))
 
 		mPoints = cur.execute('SELECT mountPoint FROM mountPoints \
 			WHERE PID=Null AND Disp={0}'.format(display))
