@@ -1,0 +1,22 @@
+#!/usr/bin/python3
+
+import configparser
+from subprocess import Popen
+
+LIGHTDM_CONFIG = '/etc/lightdm/lightdm.conf'
+
+config = configparser.SafeConfigParser()
+config.optionxform = str
+config.read(LIGHTDM_CONFIG)
+
+config['SeatDefaults'] = {'xserver-allow-tcp' : 'false',
+	'greeter-session' : 'lightdm-greeter',
+	'greeter-hide-users' : 'true'}
+SEATDEFAULTS = config['SeatDefaults']
+SEATDEFAULTS['session-setup-script'] = '/var/usb-server/userinfo/login'
+SEATDEFAULTS['session-cleanup-script'] = '/var/usb-server/userinfo/logout'
+config['XDMCPServer'] = {}
+config['VNCServer'] = {}
+
+with open(LIGHTDM_CONFIG, 'w') as configfile:
+	config.write(configfile)
